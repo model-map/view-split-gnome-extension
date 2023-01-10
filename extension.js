@@ -24,7 +24,7 @@ function getActiveWindow() {
 	return global.workspace_manager.get_active_workspace().list_windows().find(window => window.has_focus());
 }
 
-function getRectangles(window) {
+function getRectangles1(window) {
 	const rect = window.get_frame_rect();
 	const monitor = window.get_monitor();
 	const workspace = window.get_workspace();
@@ -34,6 +34,28 @@ function getRectangles(window) {
 		window: {
 			h: rect.height,
 			w: monitorWorkArea.width,
+			x: rect.x,
+			y: rect.y,
+		},
+		workspace: {
+			h: monitorWorkArea.height,
+			w: monitorWorkArea.width,
+			x: monitorWorkArea.x,
+			y: monitorWorkArea.y,
+		},
+	};
+}
+
+function getRectangles2(window) {
+	const rect = window.get_frame_rect();
+	const monitor = window.get_monitor();
+	const workspace = window.get_workspace();
+	const monitorWorkArea = workspace.get_work_area_for_monitor(monitor);
+
+	return {
+		window: {
+			h: monitorWorkArea.height,
+			w: rect.width,
 			x: rect.x,
 			y: rect.y,
 		},
@@ -69,7 +91,7 @@ function enable() {
 
 	Main.wm.addKeybinding('toggle-top', settings, flag, mode, () => {
 		const window = getActiveWindow();
-		const rects = getRectangles(window);
+		const rects = getRectangles1(window);
 		const newHeight = getResizeVal(rects.workspace.h, rects.window.h, HeightDelta);
 
 		window.unmaximize(Meta.MaximizeFlags.VERTICAL);
@@ -79,7 +101,7 @@ function enable() {
 
 	Main.wm.addKeybinding('toggle-bottom', settings, flag, mode, () => {
 		const window = getActiveWindow();
-		const rects = getRectangles(window);
+		const rects = getRectangles1(window);
 		const newHeight = getResizeVal(rects.workspace.h, rects.window.h, HeightDelta);
 		const yStart = rects.workspace.h - newHeight + 100;
 
@@ -87,6 +109,32 @@ function enable() {
 		window.move_frame(false, rects.window.x, yStart);
 		window.move_resize_frame(false, rects.window.x, yStart, rects.window.w, newHeight);
 	});
+
+	Main.wm.addKeybinding('toggle-left', settings, flag, mode, () => {
+		const window = getActiveWindow();
+		const rects = getRectangles2(window);
+		const newWidth = getResizeVal(rects.workspace.w, rects.window.w, WidthDelta);
+
+		window.unmaximize(Meta.MaximizeFlags.HORIZONTAL);
+		window.unmaximize(Meta.MaximizeFlags.VERTICAL);
+		window.move_frame(false, rects.workspace.x, 0);
+		window.move_resize_frame(false, rects.workspace.x, 0, newWidth, rects.window.h);
+		window.maximize(Meta.MaximizeFlags.VERTICAL);
+	});
+
+	Main.wm.addKeybinding('toggle-right', settings, flag, mode, () => {
+		const window = getActiveWindow();
+		const rects = getRectangles2(window);
+		const newWidth = getResizeVal(rects.workspace.w, rects.window.w, WidthDelta);
+		const xStart = rects.workspace.x + rects.workspace.w - newWidth;
+
+		window.unmaximize(Meta.MaximizeFlags.HORIZONTAL);
+		window.unmaximize(Meta.MaximizeFlags.VERTICAL);
+		window.move_frame(false, xStart, 0);
+		window.move_resize_frame(false, xStart, 0, newWidth, rects.window.h);
+		window.maximize(Meta.MaximizeFlags.VERTICAL);
+	});
+
 }
 
 // eslint-disable-next-line no-unused-vars
