@@ -10,7 +10,6 @@ const prettyNames = {
 	'toggle-right': 'Global Toggle size while anchored to the right',
 	'toggle-top': 'Global Toggle size while anchored to the top',
 	'toggle-bottom': 'Global Toggle size while anchored to the bottom',
-	'midscreen': 'Global Put in the middle of the screen',
 };
 
 // eslint-disable-next-line no-unused-vars
