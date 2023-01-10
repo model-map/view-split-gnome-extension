@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+
+  <schema id="org.gnome.shell.extensions.bifocals" path="/org/gnome/shell/extensions/bifocals/">
+
+    <key type="as" name="midscreen">
+      <default><![CDATA[['<Super><Ctrl>c']]]></default>
+      <summary>Midscreen</summary>
+    </key>
+
+    <key type="as" name="toggle-left">
+      <default><![CDATA[['<Super><Ctrl>Left']]]></default>
+      <summary>Toggle left anchoring</summary>
+    </key>
+
+    <key type="as" name="toggle-right">
+      <default><![CDATA[['<Super><Ctrl>Right']]]></default>
+      <summary>Toggle right anchoring</summary>
+    </key>
+
+    <key type="as" name="toggle-top">
+      <default><![CDATA[['<Super><Ctrl>Up']]]></default>
+      <summary>Toggle top anchoring</summary>
+    </key>
+
+    <key type="as" name="toggle-bottom">
+      <default><![CDATA[['<Super><Ctrl>Down']]]></default>
+      <summary>Toggle bottom anchoring</summary>
+    </key>
+
+  </schema>
+
+</schemalist>
