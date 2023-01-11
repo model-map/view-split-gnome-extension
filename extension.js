@@ -139,7 +139,6 @@ function enable() {
 
 // eslint-disable-next-line no-unused-vars
 function disable() {
-	Main.wm.removeKeybinding('midscreen');
 	Main.wm.removeKeybinding('toggle-left');
 	Main.wm.removeKeybinding('toggle-right');
 	Main.wm.removeKeybinding('toggle-top');

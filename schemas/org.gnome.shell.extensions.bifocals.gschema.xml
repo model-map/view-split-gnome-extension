@@ -3,7 +3,6 @@
 
   <schema id="org.gnome.shell.extensions.view-split" path="/org/gnome/shell/extensions/view-split/">
 
-
     <key type="as" name="toggle-top">
       <default><![CDATA[['<Super>Up']]]></default>
       <summary>Toggle top anchoring</summary>
@@ -23,8 +22,6 @@
       <default><![CDATA[['<Super>Right']]]></default>
       <summary>Toggle right anchoring</summary>
     </key>
-
-  
 
   </schema>
 
