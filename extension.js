@@ -5,22 +5,7 @@ const WidthDelta = 10;
 const HeightDelta = 11;
 const ExtensionUtils = imports.misc.extensionUtils;
 const MyExtension = ExtensionUtils.getCurrentExtension();
-
-function getSettings() {
-	const GioSSS = Gio.SettingsSchemaSource;
-	const schemaSource = GioSSS.new_from_directory(
-		Me.dir.get_child('schemas').get_path(),
-		GioSSS.get_default(),
-		false,
-	);
-	const schemaObj = schemaSource.lookup('org.gnome.shell.extensions.viewsplit', true);
-
-	if (!schemaObj) {
-		throw new Error('cannot find schemas');
-	}
-
-	return new Gio.Settings({ settings_schema: schemaObj });
-}
+const settings = ExtensionUtils.getSettings('org.gnome.shell.extensions.viewsplit');
 
 function getActiveWindow() {
 	return global.workspace_manager.get_active_workspace().list_windows().find(window => window.has_focus());
@@ -89,7 +74,6 @@ function init() {
 function enable() {
 	const mode = Shell.ActionMode.NORMAL;
 	const flag = Meta.KeyBindingFlags.IGNORE_AUTOREPEAT;
-	const settings = getSettings();
 
 	Main.wm.addKeybinding('toggle-top', settings, flag, mode, () => {
 		const window = getActiveWindow();
@@ -145,4 +129,5 @@ function disable() {
 	Main.wm.removeKeybinding('toggle-right');
 	Main.wm.removeKeybinding('toggle-top');
 	Main.wm.removeKeybinding('toggle-bottom');
+	settings=null;
 }
