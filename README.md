@@ -4,6 +4,10 @@ Maximize your productivity with View Split, the window management tool that allo
 
 ## Pre-requisites
 1. Disable native Keyboard shortcuts for Super+<Up/Down/Left/Right> in Settings -> Keyboard -> Keyboard shortcuts -> Windows
+
+```
+note: you can also replace the keybindings.
+```
  
  ![image](https://user-images.githubusercontent.com/118442144/211705805-e7b297a8-453d-48f4-b429-98b37c11a94c.png)
  ![image](https://user-images.githubusercontent.com/118442144/211705889-66ba35de-910a-4e20-a426-8221c4e0f6b4.png)
