@@ -1,15 +1,15 @@
-// Mostly taken from https://raw.githubusercontent.com/gTile/gTile
-// Slightly modified but all real credit goes to gTitle!
+// Mostly taken from https://raw.githubusercontent.com/gTile/gTile and https://github.com/shiznatix/bifocals-gnome-extension/
+// Slightly modified but all real credit goes to gTitle and BiFocals!
 
 const GObject = imports.gi.GObject;
 const Gtk = imports.gi.Gtk;
 
 const ExtensionUtils = imports.misc.extensionUtils;
 const prettyNames = {
-	'toggle-left': 'Global Toggle size while anchored to the left',
-	'toggle-right': 'Global Toggle size while anchored to the right',
-	'toggle-top': 'Global Toggle size while anchored to the top',
-	'toggle-bottom': 'Global Toggle size while anchored to the bottom',
+	'toggle-left': 'Split view Left',
+	'toggle-right': 'Split view Right',
+	'toggle-top': 'Split view Top',
+	'toggle-bottom': 'Split view Bottom',
 };
 
 // eslint-disable-next-line no-unused-vars
