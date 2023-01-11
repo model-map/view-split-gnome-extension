@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist>
 
-  <schema id="org.gnome.shell.extensions.view-split" path="/org/gnome/shell/extensions/view-split/">
+  <schema id="org.gnome.shell.extensions.viewsplit" path="/org/gnome/shell/extensions/viewsplit/">
 
     <key type="as" name="toggle-top">
       <default><![CDATA[['<Super>Up']]]></default>

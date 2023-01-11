@@ -1,8 +1,8 @@
 {
-	"uuid": "view-split@model-map.github.io",
+	"uuid": "viewsplit@model-map.github.io",
 	"name": "View Split",
 	"description": "Maximize your productivity with View Split, the window management tool that allows you to split windows into top, left, bottom, and right sections",
 	"version": ["1.0.0"],
-	"shell-version": ["42.2"],
-	"url": "https://github.com/model-map/view-split"
+	"shell-version": ["42"],
+	"url": "https://github.com/model-map/view-split-gnome-extension"
 }

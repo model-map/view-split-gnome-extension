@@ -3,6 +3,8 @@ const Main = imports.ui.main;
 const Me = imports.misc.extensionUtils.getCurrentExtension();
 const WidthDelta = 10;
 const HeightDelta = 11;
+const ExtensionUtils = imports.misc.extensionUtils;
+const MyExtension = ExtensionUtils.getCurrentExtension();
 
 function getSettings() {
 	const GioSSS = Gio.SettingsSchemaSource;
@@ -11,7 +13,7 @@ function getSettings() {
 		GioSSS.get_default(),
 		false,
 	);
-	const schemaObj = schemaSource.lookup('org.gnome.shell.extensions.view-split', true);
+	const schemaObj = schemaSource.lookup('org.gnome.shell.extensions.viewsplit', true);
 
 	if (!schemaObj) {
 		throw new Error('cannot find schemas');

@@ -41,7 +41,7 @@ function setChild(widget, child) {
 
 // eslint-disable-next-line no-unused-vars
 function buildPrefsWidget() {
-	const settings = ExtensionUtils.getSettings('org.gnome.shell.extensions.view-split');
+	const settings = ExtensionUtils.getSettings('org.gnome.shell.extensions.viewsplit');
 	const grid = new Gtk.Grid({
 		column_spacing: 10,
 		orientation: Gtk.Orientation.VERTICAL,
