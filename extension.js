@@ -11,7 +11,7 @@ function getSettings() {
 		GioSSS.get_default(),
 		false,
 	);
-	const schemaObj = schemaSource.lookup('org.gnome.shell.extensions.bifocals', true);
+	const schemaObj = schemaSource.lookup('org.gnome.shell.extensions.view-split', true);
 
 	if (!schemaObj) {
 		throw new Error('cannot find schemas');

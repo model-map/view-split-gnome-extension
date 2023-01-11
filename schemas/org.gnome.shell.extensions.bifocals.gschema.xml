@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist>
 
-  <schema id="org.gnome.shell.extensions.bifocals" path="/org/gnome/shell/extensions/bifocals/">
+  <schema id="org.gnome.shell.extensions.view-split" path="/org/gnome/shell/extensions/view-split/">
 
 
     <key type="as" name="toggle-top">
