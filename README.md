@@ -9,7 +9,7 @@ Maximize your productivity with View Split, the window management tool that allo
  ![image](https://user-images.githubusercontent.com/118442144/211705930-38d901d5-0f8c-4315-ae4c-359090b0e0f5.png)
  
 ## Installation
-[Add instructions here]
+Install from gnome-extension: https://extensions.gnome.org/extension/5648/view-split/ 
 
 ## Shortcuts
 All shortcuts can be modified in the preferences. See `gnome-tweaks` or `extensions`.
