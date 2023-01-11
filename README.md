@@ -11,7 +11,7 @@ Maximize your productivity with View Split, the window management tool that allo
 ## Installation
 [Add instructions here]
 
-# Shortcuts
+## Shortcuts
 All shortcuts can be modified in the preferences. See `gnome-tweaks` or `extensions`.
 
 | Name | Description | Default Keybinding |
@@ -20,3 +20,7 @@ All shortcuts can be modified in the preferences. See `gnome-tweaks` or `extensi
 | `toggle-right` | Split view Right | &lt;Super&gt;+Right |
 | `toggle-top` | Split view Top | &lt;Super&gt;+Up |
 | `toggle-bottom` | Split view Bottom | &lt;Super&gt;+Down |
+
+### Next Steps:
+
+    - Smoothen animation
