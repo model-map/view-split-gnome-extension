@@ -1,5 +1,6 @@
 # view-split
 Maximize your productivity with View Split, the window management tool that allows you to split windows into top, left, bottom, and right sections.
+ ![image](https://user-images.githubusercontent.com/118442144/211711730-5f7e0aea-52b1-43bd-add2-0c361ab0b423.png) ![image](https://user-images.githubusercontent.com/118442144/211711791-699ef965-7c05-456a-9448-d489ccf6407a.png)
 
 ## Pre-requisites
 1. Disable native Keyboard shortcuts for Super+<Up/Down/Left/Right> in Settings -> Keyboard -> Keyboard shortcuts -> Windows
