@@ -14,7 +14,7 @@ note: you can also replace the keybindings.
  ![image](https://user-images.githubusercontent.com/118442144/211705930-38d901d5-0f8c-4315-ae4c-359090b0e0f5.png)
  
 ## Installation
-Install from gnome-extension: https://extensions.gnome.org/extension/5648/view-split/ 
+Install from gnome-extension: https://extensions.gnome.org/extension/5651/view-split/
 
 ## Shortcuts
 All shortcuts can be modified in the preferences. See `gnome-tweaks` or `extensions`.
