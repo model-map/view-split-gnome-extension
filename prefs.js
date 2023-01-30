@@ -9,8 +9,7 @@ const prettyNames = {
 	'toggle-left': 'Split view Left',
 	'toggle-right': 'Split view Right',
 	'toggle-top': 'Split view Top',
-	'toggle-bottom': 'Split view Bottom',
-	'n-divisions':'Set screen division'
+	'toggle-bottom': 'Split view Bottom'
 };
 
 // eslint-disable-next-line no-unused-vars
@@ -29,7 +28,7 @@ function appendHotkey(model, settings, name, prettyName) {
 
 	const row = model.insert(-1);
 
-	model.set(row, [0, 1, 2, 3,4], [name, prettyName, mods, key]);
+	model.set(row, [0, 1, 2, 3], [name, prettyName, mods, key]);
 }
 
 function setChild(widget, child) {
