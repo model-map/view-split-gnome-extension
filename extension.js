@@ -1,113 +1,121 @@
-const { Gio, Shell, Meta } = imports.gi;
-const Main = imports.ui.main;
-const Me = imports.misc.extensionUtils.getCurrentExtension();
-const WidthDelta = 10;
-const HeightDelta = 11;
-const ExtensionUtils = imports.misc.extensionUtils;
-const MyExtension = ExtensionUtils.getCurrentExtension();
-let settings;
-let yStart=0;
+// Import necessary modules
+import Shell from 'gi://Shell';
+import Meta from 'gi://Meta';
+import { wm } from 'resource:///org/gnome/shell/ui/main.js';
+import { Extension } from 'resource:///org/gnome/shell/extensions/extension.js';
 
-function getActiveWindow() {
-	return global.workspace_manager.get_active_workspace().list_windows().find(window => window.has_focus());
-}
+export default class MyExtension extends Extension {
+    constructor(metadata) {
+        super(metadata);
+        this.WIDTH_DELTA = 10;
+        this.HEIGHT_DELTA = 11;
+        this._settings = null;
+        this._yStart = 0;
+    }
 
-function getRectangles(window) {
-	const rect = window.get_frame_rect();
-	const monitor = window.get_monitor();
-	const workspace = window.get_workspace();
-	const monitorWorkArea = workspace.get_work_area_for_monitor(monitor);
+    enable() {
+        const mode = Shell.ActionMode.NORMAL;
+        const flag = Meta.KeyBindingFlags.IGNORE_AUTOREPEAT;
+        this._settings = this.getSettings('org.gnome.shell.extensions.viewsplit');
 
-	return {
-		window: {
-			h: rect.height,
-			w: rect.width,
-			x: rect.x,
-			y: rect.y,
-		},
-		workspace: {
-			h: monitorWorkArea.height,
-			w: monitorWorkArea.width,
-			x: monitorWorkArea.x,
-			y: monitorWorkArea.y,
-		},
-	};
-}
+        wm.addKeybinding('toggle-top', this._settings, flag, mode, () => {
+            const window = this.getActiveWindow();
+            if (!window) {
+                return;
+            }
+            const rects = this.getRectangles(window);
+            const newHeight = this.getResizeVal(rects.workspace.h, rects.window.h, this.HEIGHT_DELTA);
+            this._yStart = 0;
 
-function getResizeVal(workspaceAxis, windowAxis, c) {
-	const size1 = workspaceAxis;
-	const size2 = workspaceAxis / 2;
+            window.unmaximize(Meta.MaximizeFlags.VERTICAL);
+            window.move_frame(false, rects.window.x, 0);
+            window.move_resize_frame(false, rects.window.x, this._yStart, rects.window.w, newHeight);
+        });
 
-	if (windowAxis < size1 - c) {
-		return size1;
-	}
+        wm.addKeybinding('toggle-bottom', this._settings, flag, mode, () => {
+            const window = this.getActiveWindow();
+            if (!window) {
+                return;
+            }
+            const rects = this.getRectangles(window);
+            const newHeight = this.getResizeVal(rects.workspace.h, rects.window.h, this.HEIGHT_DELTA);
+            this._yStart = rects.workspace.h - newHeight + 100;
 
-	return size2;
-}
+            window.unmaximize(Meta.MaximizeFlags.VERTICAL);
+            window.move_frame(false, rects.window.x, this._yStart);
+            window.move_resize_frame(false, rects.window.x, this._yStart, rects.window.w, newHeight);
+        });
 
-// eslint-disable-next-line no-unused-vars
-function init() {
-}
+        wm.addKeybinding('toggle-left', this._settings, flag, mode, () => {
+            const window = this.getActiveWindow();
+            if (!window) {
+                return;
+            }
+            const rects = this.getRectangles(window);
+            const newWidth = this.getResizeVal(rects.workspace.w, rects.window.w, this.WIDTH_DELTA);
 
-// eslint-disable-next-line no-unused-vars
-function enable() {
-	const mode = Shell.ActionMode.NORMAL;
-	const flag = Meta.KeyBindingFlags.IGNORE_AUTOREPEAT;
-	settings = ExtensionUtils.getSettings('org.gnome.shell.extensions.viewsplit');
+            window.unmaximize(Meta.MaximizeFlags.HORIZONTAL);
+            window.move_frame(false, rects.workspace.x, 0);
+            window.move_resize_frame(false, rects.workspace.x, this._yStart, newWidth, rects.window.h);
+        });
 
+        wm.addKeybinding('toggle-right', this._settings, flag, mode, () => {
+            const window = this.getActiveWindow();
+            if (!window) {
+                return;
+            }
+            const rects = this.getRectangles(window);
+            const newWidth = this.getResizeVal(rects.workspace.w, rects.window.w, this.WIDTH_DELTA);
+            const xStart = rects.workspace.x + rects.workspace.w - newWidth;
 
-	Main.wm.addKeybinding('toggle-top', settings, flag, mode, () => {
-		const window = getActiveWindow();
-		const rects = getRectangles(window);
-		const newHeight = getResizeVal(rects.workspace.h, rects.window.h, HeightDelta);
-		yStart=0;
+            window.unmaximize(Meta.MaximizeFlags.HORIZONTAL);
+            window.move_frame(false, xStart, 0);
+            window.move_resize_frame(false, xStart, this._yStart, newWidth, rects.window.h);
+        });
+    }
 
-		window.unmaximize(Meta.MaximizeFlags.VERTICAL);
-		window.move_frame(false, rects.window.x, 0);
-		window.move_resize_frame(false, rects.window.x, yStart, rects.window.w, newHeight);
-	});
+    disable() {
+        wm.removeKeybinding('toggle-left');
+        wm.removeKeybinding('toggle-right');
+        wm.removeKeybinding('toggle-top');
+        wm.removeKeybinding('toggle-bottom');
+        this._settings = null;
+    }
 
-	Main.wm.addKeybinding('toggle-bottom', settings, flag, mode, () => {
-		const window = getActiveWindow();
-		const rects = getRectangles(window);
-		const newHeight = getResizeVal(rects.workspace.h, rects.window.h, HeightDelta);
-		yStart = rects.workspace.h - newHeight + 100;
+    getActiveWindow() {
+        return global.display.get_focus_window();
+    }
 
-		window.unmaximize(Meta.MaximizeFlags.VERTICAL);
-		window.move_frame(false, rects.window.x, yStart);
-		window.move_resize_frame(false, rects.window.x, yStart, rects.window.w, newHeight);
-	});
+    getRectangles(window) {
+        const rect = window.get_frame_rect();
+        const monitor = window.get_monitor();
+        const workspace = window.get_workspace();
+        const monitorWorkArea = workspace.get_work_area_for_monitor(monitor);
 
-	Main.wm.addKeybinding('toggle-left', settings, flag, mode, () => {
-		const window = getActiveWindow();
-		const rects = getRectangles(window);
-		const newWidth = getResizeVal(rects.workspace.w, rects.window.w, WidthDelta);
+        return {
+            window: {
+                h: rect.height,
+                w: rect.width,
+                x: rect.x,
+                y: rect.y,
+            },
+            workspace: {
+                h: monitorWorkArea.height,
+                w: monitorWorkArea.width,
+                x: monitorWorkArea.x,
+                y: monitorWorkArea.y,
+            },
+        };
+    }
 
-		window.unmaximize(Meta.MaximizeFlags.HORIZONTAL);
-		window.unmaximize(Meta.MaximizeFlags.VERTICAL);
-		window.move_frame(false, rects.workspace.x, 0);
-		window.move_resize_frame(false, rects.workspace.x, yStart, newWidth, rects.window.h);
-	});
+    getResizeVal(workspaceAxis, windowAxis, c) {
+        const size1 = workspaceAxis;
+        const size2 = workspaceAxis / 2;
 
-	Main.wm.addKeybinding('toggle-right', settings, flag, mode, () => {
-		const window = getActiveWindow();
-		const rects = getRectangles(window);
-		const newWidth = getResizeVal(rects.workspace.w, rects.window.w, WidthDelta);
-		const xStart = rects.workspace.x + rects.workspace.w - newWidth;
+        if (windowAxis < size1 - c) {
+            return size1;
+        }
 
-		window.unmaximize(Meta.MaximizeFlags.HORIZONTAL);
-		window.unmaximize(Meta.MaximizeFlags.VERTICAL);
-		window.move_frame(false, xStart, 0);
-		window.move_resize_frame(false, xStart, yStart, newWidth, rects.window.h);
-	});
-
-}
-
-// eslint-disable-next-line no-unused-vars
-function disable() {
-	Main.wm.removeKeybinding('toggle-left');
-	Main.wm.removeKeybinding('toggle-right');
-	Main.wm.removeKeybinding('toggle-top');
-	Main.wm.removeKeybinding('toggle-bottom');
-	settings=null;
+        return size2;
+    }
 }
