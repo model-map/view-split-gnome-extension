@@ -3,6 +3,12 @@
 	"name": "View Split",
 	"description": "Maximize your productivity with View Split, the window management tool that allows you to split windows into top, left, bottom, and right sections",
 	"version": 9,
-	"shell-version": ["42","43", "44","45", "46", "47"],
+	"shell-version": ["42","43", "44","45", "46", "47","48"],
+	"settings-schema": "org.gnome.shell.extensions.view-split",
+	"gettext-domain": "view-split",
+	"license": "GPL-3.0-or-later",
+	"dependencies": [
+		"gnome-shell-extension-tool"
+	],
 	"url": "https://github.com/model-map/view-split-gnome-extension"
 }
